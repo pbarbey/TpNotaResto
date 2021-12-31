@@ -10,13 +10,9 @@ jobs:
   symfony-tests:
     runs-on: ubuntu-latest
     steps:
-    - name: set up PHP avec la CI
-      #uses: shivammathur/setup-php@v2
-      uses: jakzal/phpqa@master
-      with:
-          php-version: '7.4'
-          tools: php-cs-fixer, phpstan, local-php-security-checker, twig-lint
     - uses: actions/checkout@v2
+    #- name: set up PHP avec la CI
+      #uses: shivammathur/setup-php@v2
     #- name: Copy .env.test.local
     #  run: php -r "file_exists('.env.test.local') || copy('.env.test', '.env.test.local');"
     - name: Cache Composer packages
@@ -29,20 +25,32 @@ jobs:
           ${{ runner.os }}-php-
     - name: Install Dependencies
       run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+      
     - name: Security Check
-      run: local-php-security-checker security:check composer.lock
+      uses: docker://jakzal/phpqa:php7.4
+      with:
+        args: local-php-security-checker
+      
     - name: PHP-CS-Fixer
-      #uses: OskarStark/php-cs-fixer-ga@3.4.0.1
-      run: phpcs -v --standard=PSR12 --ignore=./src/Kernel.php ./src
+      uses: docker://jakzal/phpqa:php7.4
+      with:
+        args: phpcs -v --standard=PSR12 --ignore=./src/Kernel.php ./src
+      
     - name: PHP Stan
-      run: phpstan analyse ./src
-      #uses: OskarStark/phpstan-ga@1.0.1
+      uses: docker://jakzal/phpqa:php7.4
+      with:
+        args: phpstan analyse ./src
+    
     - name: twig-lint
-      run: twig-lint lint ./templates
+      uses: docker://jakzal/phpqa:php7.4
+      with:
+        args: twig-lint lint ./templates
+      
     - name: Create Database
       run: |
         mkdir -p data
         touch data/database.sqlite
+        
     - name: PHPUnit
       env:
         DATABASE_URL: sqlite:///%kernel.project_dir%/data/database.sqlite
