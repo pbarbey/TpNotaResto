@@ -20,6 +20,9 @@ symfony check:requirements
 ### Lancer l'environnement de développement
 
 ```bash
+composer install
+npm install
+npm run build
 docker-compose up -d
 symfony serve -d
 ```
