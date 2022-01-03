@@ -14,7 +14,7 @@ jobs:
         image: mysql:latest
         env:
           MYSQL_ROOT_PASSWORD: password
-          MYSQL_DATABASE: main
+          MYSQL_DATABASE: main_test
         ports:
             - '8888:3306'
     steps:
@@ -66,7 +66,7 @@ jobs:
     - name: Set up MySQL
       run: |
         sudo /etc/init.d/mysql start
-        mysql -h 127.0.0.1 --port 8888 -u root -ppassword -e 'CREATE DATABASE IF NOT EXISTS main;'
+        mysql -h 127.0.0.1 --port 8888 -u root -ppassword -e 'CREATE DATABASE IF NOT EXISTS main_test;'
         
     - name: PHPUnit
       env:
