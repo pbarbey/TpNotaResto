@@ -49,7 +49,8 @@ jobs:
       with:
         args: twig-lint lint ./templates
       
-#    - name: Create Database
+    - name: Create Database
+      run: docker-compose up -d
 #      run: |
 #        mkdir -p data
 #        touch data/database.sqlite
