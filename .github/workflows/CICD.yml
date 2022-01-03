@@ -50,13 +50,13 @@ jobs:
         args: twig-lint lint ./templates
       
     - name: Create Database
-      run: docker-compose up -d
-#      run: |
-#        mkdir -p data
-#        touch data/database.sqlite
+      #run: docker-compose up -d
+      run: |
+        mkdir -p data
+        touch data/database.sqlite
         
     - name: PHPUnit
-      #env:
-       # DATABASE_URL: sqlite:///%kernel.project_dir%/data/database.sqlite
+      env:
+        DATABASE_URL: sqlite:///%kernel.project_dir%/data/database.sqlite
       #run: env && chmod +x ./phpunit.sh && ./phpunit.sh
       run: vendor/bin/phpunit
