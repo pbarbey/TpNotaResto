@@ -10,6 +10,7 @@ Travaux pratique sur la création d'une application de notation de restaurant
 * Composer
 * Docker
 * Docker-compose
+* Nodejs et npm
 
 Vous pouvez vérifier les prés-requis (sauf docker et docker-compose) avec la commande (de la la CLI symfony):
 

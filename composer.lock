@@ -8150,6 +8150,10 @@
                 "testing",
                 "xunit"
             ],
+            "support": {
+                "issues": "https://github.com/sebastianbergmann/phpunit/issues",
+                "source": "https://github.com/sebastianbergmann/phpunit/tree/9.5.11"
+            },
             "funding": [
                 {
                     "url": "https://phpunit.de/sponsors.html",
