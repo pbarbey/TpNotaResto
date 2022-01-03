@@ -77,4 +77,4 @@ jobs:
         php bin/console d:d:c --if-not-exists --env=test
         php bin/console d:m:m -n --env=test
         php bin/console d:f:l -n --env=test
-        vendor/bin/phpunit
+        SYMFONY_DEPRECATIONS_HELPER=disabled vendor/bin/phpunit
