@@ -60,6 +60,6 @@ jobs:
         DATABASE_URL: sqlite:///%kernel.project_dir%/data/database.sqlite
       #run: chmod +x ./phpunit.sh && ./phpunit.sh
       run: |
-        php bin/console d:m:m
-        php bin/console d:f:l
+        php bin/console d:m:m -n
+        php bin/console d:f:l -n
         vendor/bin/phpunit
