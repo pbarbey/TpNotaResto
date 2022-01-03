@@ -63,9 +63,9 @@ jobs:
       #  mkdir -p data
       #  touch data/database.sqlite
       
-    - name: Set up MySQL
-      run: |
-        sudo /etc/init.d/mysql start
+    #- name: Set up MySQL
+    #  run: |
+     #   sudo /etc/init.d/mysql start
        # mysql -h 127.0.0.1 --port 8888 -u root -ppassword 
         
     - name: PHPUnit
