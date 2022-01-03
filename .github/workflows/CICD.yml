@@ -57,4 +57,4 @@ jobs:
     - name: PHPUnit
       #env:
        # DATABASE_URL: sqlite:///%kernel.project_dir%/data/database.sqlite
-      run: chmod +x ./phpunit.sh && ./phpunit.sh
+      run: pwd && chmod +x ./phpunit.sh && ./phpunit.sh
