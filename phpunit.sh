@@ -6,7 +6,7 @@ symfony console d:f:l --env=test -n
 
 if [ "$1" == "coverage" ]
 then
-   symfony php ./vendor/bin/phpunit --coverage-html var/log/test/test-coverage
+   symfony php ./vendor/bin/phpunit --testdox --coverage-html var/log/test/test-coverage
 else
-   symfony php ./vendor/bin/phpunit
+   symfony php ./vendor/bin/phpunit --testdox
 fi

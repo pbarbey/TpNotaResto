@@ -2,9 +2,9 @@
 
 namespace App\Tests;
 
-use App\Entity\User;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\HttpFoundation\Response;
 
 class HomePageTest extends WebTestCase
 {
@@ -23,10 +23,18 @@ class HomePageTest extends WebTestCase
         $this->assertResponseIsSuccessful();
 
         // Je souhaite pouvoir me connecter/déconnecter de mon compte
-        $buttonForm = $crawler->selectButton('Sign in');
-        $form = $buttonForm->form();
 
-        $client->submitForm('Sign in', [
+        /* V1 test */
+        // $buttonForm = $crawler->selectButton('Sign in');
+        // $form = $buttonForm->form();
+
+        // $client->submitForm('Sign in', [
+        //     'email' => 'client@notaResto.fr',
+        //     'password' => 'client'
+        // ]);
+
+        /* V2 test */
+        $form = $crawler->selectButton('Sign in')->form([
             'email' => 'client@notaResto.fr',
             'password' => 'client'
         ]);
@@ -38,32 +46,31 @@ class HomePageTest extends WebTestCase
         $this->assertResponseIsSuccessful();
         $client->request('GET', '/logout');
         $client->followRedirect();
-        $this->assertResponseRedirects('/login', 302);
+        $this->assertResponseRedirects('/login', Response::HTTP_FOUND);
     }
 
-    // public function testCreateAccount(): void
-    // {
-    //     $client = static::createClient();
+    public function testCreateAccount(): void
+    {
+        $client = static::createClient();
 
-    //     //En tant qu'utilisateur de l'application,
-    //     //Lorsque j'arrive sur la page d'accueil
-    //     //Je souhaite pouvoir me créer un compte
-    //     $crawler = $client->request('GET', '/createAccount');
-    //     $this->assertResponseIsSuccessful();
+        //En tant qu'utilisateur de l'application,
+        //Lorsque j'arrive sur la page d'accueil
+        //Je souhaite pouvoir me créer un compte
+        $crawler = $client->request('GET', '/createAccount');
+        $this->assertResponseIsSuccessful();
 
-    //     $buttonForm = $crawler->selectButton('Créer un compte');
-    //     $form = $buttonForm->form();
+        $form = $crawler->selectButton('Créer un compte')->form([
+            'user[nom]' => 'Nom',
+            'user[prenom]' => 'Prenom',
+            'user[email]' => 'email@notaResto.fr',
+            'user[roles][0]' => 'ROLE_USER',
+            'user[password][first]' => 'password',
+            'user[password][second]' => 'password'
+        ]);
 
-    //     $client->submitForm('Créer un compte', [
-    //         'user[nom]' => 'Nom',
-    //         'user[prenom]' => 'Prenom',
-    //         'user[email]' => 'email@notaResto.fr',
-    //         'user[role]' => ['ROLE_USER'],
-    //         'user[password]' => 'password'
-    //     ]);
-
-    //     $client->submit($form);
-    //     $this->assertResponseIsSuccessful();
-    //     $this->assertSelectorTextContains('div','Votre compte a été créer');
-    // }
+        $client->submit($form);
+        $crawler = $client->followRedirect();
+        $this->assertResponseIsSuccessful();
+        $this->assertSelectorTextContains('div', 'Votre compte a été créer');
+    }
 }
