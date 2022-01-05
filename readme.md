@@ -36,7 +36,3 @@ symfony console d:f:l
 ```bash
 ./phpunit.sh
 ```
-
-## Problème connu
-
-Dans le ficheir .env.test il faut redéfinir DATATBASE_URL avec les valeurs du conteneur. Phpunit ne semble pas pouvoir récupérer la valeur réécrite DATABASE_URL émise depuis le conteneur comme pour le .env 
