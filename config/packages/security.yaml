@@ -1,4 +1,9 @@
 security:
+    role_hierarchy:
+        ROLE_USER: ['ROLE_USER']
+        ROLE_RESTAURATEUR: ['ROLE_USER', 'ROLE_RESTAURATEUR']
+        ROLE_MODERATEUR: ['ROLE_MODERATEUR', 'ROLE_RESTAURATEUR']
+
     enable_authenticator_manager: true
     # https://symfony.com/doc/current/security.html#registering-the-user-hashing-passwords
     password_hashers:
