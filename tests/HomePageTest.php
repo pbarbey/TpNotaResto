@@ -86,7 +86,7 @@ class HomePageTest extends WebTestCase
         $this->assertResponseIsSuccessful();
         // Je veux visualiser les restaurants dans une liste,
         // si il n'y a pas de restaurant le message "Pas encore de restaurant enregistrés" apparait.
-        $this->assertSelectorTextContains('div', 'Pas encore de restaurant enregistrés');
+        $this->assertSelectorTextContains('h1', 'Pas encore de restaurant enregistrés');
 
         //restore les fixtures générale de l'application
         $databaseTool->loadFixtures(['App\DataFixtures\AppFixtures']);
