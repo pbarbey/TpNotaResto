@@ -2,6 +2,7 @@
 
 namespace App\Tests;
 
+use App\Entity\Restaurant;
 use App\Entity\User;
 use PHPUnit\Framework\TestCase;
 
@@ -24,5 +25,18 @@ class EntitiesTest extends TestCase
         $this->assertTrue($user->getUsername() == 'email@notaResto.fr');
         $this->assertTrue($user->getRoles() == ['ROLE_USER']);
         $this->assertTrue($user->getPassword() == 'password');
+    }
+
+    public function testRestaurant(): void
+    {
+        $restaurant = new Restaurant();
+        $restaurant->setPostalCode('63370')
+            ->setImage('/path/to/image')
+            ->setNomRestaurant('Delices Romain');
+
+        $this->assertTrue($restaurant->getId() === null);
+        $this->assertTrue($restaurant->getPostalCode() == '63370');
+        $this->assertTrue($restaurant->getImage() == '/path/to/image');
+        $this->assertTrue($restaurant->getNomRestaurant() == 'Delices Romain');
     }
 }

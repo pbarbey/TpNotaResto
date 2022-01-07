@@ -6,6 +6,8 @@ use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 use App\Tests\Helper\Helper;
+use Liip\TestFixturesBundle\Services\DatabaseToolCollection;
+use Liip\TestFixturesBundle\Services\DatabaseTools\AbstractDatabaseTool;
 
 class HomePageTest extends WebTestCase
 {
@@ -69,17 +71,25 @@ class HomePageTest extends WebTestCase
 
     public function testPageAccueilEmptyData(): void
     {
+        $client = static::createClient();
+        
+        /* chargement de la fixture qui a des restaurants vide*/
+        /** @var AbstractDatabaseTool $databaseTool */
+        $databaseTool = static::getContainer()->get(DatabaseToolCollection::class)->get();
+        $databaseTool->loadFixtures(['App\DataFixtures\EmptyRestaurantFixtures']);
+
         // En tant qu'utilisateur, après m'être connecté,
         // J'arrive sur la page d'accueil.
-        $client = static::createClient();
-        $form = Helper::loginHelper($client, 'client@notaResto.fr', 'client');
+        $form = Helper::loginHelper($client, 'restaurateur@notaResto.fr', 'restaurateur');
         $client->submit($form);
         $client->followRedirect();
         $this->assertResponseIsSuccessful();
         // Je veux visualiser les restaurants dans une liste,
         // si il n'y a pas de restaurant le message "Pas encore de restaurant enregistrés" apparait.
-        $this->assertSelectorTextContains('div', 'Pas de restaurant rensaigné pour l\'instant');
+        $this->assertSelectorTextContains('div', 'Pas encore de restaurant enregistrés');
 
+        //restore les fixtures générale de l'application
+        $databaseTool->loadFixtures(['App\DataFixtures\AppFixtures']);
     }
 
     public function testPageAccueilWithData(): void
@@ -93,6 +103,5 @@ class HomePageTest extends WebTestCase
         $this->assertResponseIsSuccessful();
         // Je veux visualiser les restaurants dans une liste,
         $this->assertSelectorExists('.card');
-
     }
 }
