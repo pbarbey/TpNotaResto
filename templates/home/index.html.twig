@@ -4,6 +4,9 @@
 {% endblock %}
 
 {% block body %}
+	<div class="d-flex justify-content-center mt-4">
+		<h3>{{ knp_pagination_sortable(restaurants, 'Filtrer les restaurants par ID', 'id' ) }}</h3>
+	</div>
 	{% if restaurants is not empty %}
 		<div class="container">
 			<div class="row">
@@ -12,13 +15,18 @@
 						<div class="card">
 							<img src="{{ restaurant.image }}" class="card-img-top" alt="lorem picsum">
 							<div class="card-body">
-								<h5 class="card-title">{{ restaurant.nomRestaurant }}</h5><small>{{ restaurant.postalCode }}</small>
-                                <p class="card-text"> #nb commentaire# ont été publiés pour ce restaurant.</p>
+								<h5 class="card-title">{{ restaurant.nomRestaurant }}{{ restaurant.id }}</h5>
+								<small>{{ restaurant.postalCode }}</small>
+								<p class="card-text">
+									#nb commentaire# ont été publiés pour ce restaurant.</p>
 								<a href="#" class="btn btn-primary">Go somewhere</a>
 							</div>
 						</div>
 					</div>
 				{% endfor %}
+			</div>
+			<div class="d-flex justify-content-center mt-4">
+				{{ knp_pagination_render(restaurants, 'templating/knpTemplate.html.twig') }}
 			</div>
 		</div>
 	{% else %}
