@@ -30,6 +30,14 @@ class AppFixtures extends Fixture
             ->setPassword($this->encoder->hashPassword($user, 'client'));
         $manager->persist($user);
 
+        $restaurateur = new User();
+        $restaurateur->setNom('NomDuRestaurateur')
+            ->setPrenom('PrenomDuRestaurateur')
+            ->setRoles(['ROLE_RESTAURATEUR'])
+            ->setEmail('restaurateur@notaResto.fr')
+            ->setPassword($this->encoder->hashPassword($restaurateur, 'restaurateur'));
+        $manager->persist($restaurateur);
+
         for ($i = 0; $i < 20; $i++) {
             $restaurant = new Restaurant();
             $restaurant->setPostalCode('63370')
