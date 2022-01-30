@@ -23,11 +23,11 @@ class EmptyRestaurantFixtures extends Fixture implements FixtureInterface
     public function load(ObjectManager $manager): void
     {
         $user = new User();
-        $user->setNom('NomDuRestaurateur')
-            ->setPrenom('PrenomDuRestaurateur')
+        $user->setNom('user')
+            ->setPrenom('user')
             ->setRoles(['ROLE_RESTAURATEUR'])
-            ->setEmail('restaurateur@notaResto.fr')
-            ->setPassword($this->encoder->hashPassword($user, 'restaurateur'));
+            ->setEmail('user@notaResto.fr')
+            ->setPassword($this->encoder->hashPassword($user, 'user'));
 
         $manager->persist($user);
 

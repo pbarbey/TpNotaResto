@@ -80,7 +80,7 @@ class HomePageTest extends WebTestCase
 
         // En tant qu'utilisateur, après m'être connecté,
         // J'arrive sur la page d'accueil.
-        $form = Helper::loginHelper($client, 'restaurateur@notaResto.fr', 'restaurateur');
+        $form = Helper::loginHelper($client, 'user@notaResto.fr', 'user');
         $client->submit($form);
         $client->followRedirect();
         $this->assertResponseIsSuccessful();
