@@ -10,15 +10,25 @@ class RestaurantTest extends WebTestCase
     public function testAddRestaurant(): void
     {
         //En tant que Restaurateur, après m'être connecté,
-        $restaurateur = static::createClient();
-        $form = Helper::loginHelper($restaurateur, 'restaurateur@notaResto.fr', 'restaurateur');
-        $restaurateur->submit($form);
-        $restaurateur->followRedirect();
+        $client = static::createClient();
+        $form = Helper::loginHelper($client, 'restaurateur@notaResto.fr', 'restaurateur');
+        $client->submit($form);
+        $client->followRedirect();
 
         //Lorsque j'arrive sur la page de gestion de mes restaurant
-        $crawler = $restaurateur->request('GET', '/add/restaurant');
+        $crawler = $client->request('GET', '/add/restaurant');
         $this->assertResponseIsSuccessful();
 
         //Je souhaite pouvoir ajouter un restaurant
+        $form = $crawler->selectButton('Ajouter')->form([
+            'restaurant[postalCode]' => '63000',
+            'restaurant[image]' => 'https://picsum.photos/300',
+            'restaurant[nomRestaurant]' => 'Resto',
+        ]);
+
+        $client->submit($form);
+        $crawler = $client->followRedirect();
+        $this->assertResponseIsSuccessful();
+        $this->assertSelectorTextContains('div', 'Le restaurant a été ajouter');
     }
 }
