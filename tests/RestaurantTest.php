@@ -7,16 +7,16 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class RestaurantTest extends WebTestCase
 {
-    public function testSomething(): void
+    public function testAddRestaurant(): void
     {
         //En tant que Restaurateur, après m'être connecté,
-        $client = static::createClient();
-        $form = Helper::loginHelper($client, 'client@notaResto.fr', 'client');
-        $client->submit($form);
-        $client->followRedirect();
+        $restaurateur = static::createClient();
+        $form = Helper::loginHelper($restaurateur, 'restaurateur@notaResto.fr', 'restaurateur');
+        $restaurateur->submit($form);
+        $restaurateur->followRedirect();
 
         //Lorsque j'arrive sur la page de gestion de mes restaurant
-        $crawler = $client->request('GET', '/add/restaurant');
+        $crawler = $restaurateur->request('GET', '/add/restaurant');
         $this->assertResponseIsSuccessful();
 
         //Je souhaite pouvoir ajouter un restaurant
