@@ -15,7 +15,7 @@ class RestaurantTest extends WebTestCase
         $client->submit($form);
         $client->followRedirect();
 
-        //Lorsque j'arrive sur la page de gestion de mes restaurant
+        //Lorsque j'arrive sur la page d'ajout d'un restaurant
         $crawler = $client->request('GET', '/add/restaurant');
         $this->assertResponseIsSuccessful();
 
@@ -30,5 +30,30 @@ class RestaurantTest extends WebTestCase
         $crawler = $client->followRedirect();
         $this->assertResponseIsSuccessful();
         $this->assertSelectorTextContains('div', 'Le restaurant a été ajouter');
+    }
+
+    public function testDashBoardRestaurant(): void
+    {
+        //En tant que Restaurateur, après m'être connecté, 
+        $client = static::createClient();
+        $form = Helper::loginHelper($client, 'restaurateur@notaResto.fr', 'restaurateur');
+        $client->submit($form);
+        $client->followRedirect();
+
+        //Lorsque j'arrive sur la page de gestion de mes restaurant
+        $crawler = $client->request('GET', '/restaurants');
+        $this->assertResponseIsSuccessful();
+
+        //Je souhaite pouvoir modifier mes restaurants
+        // $form = $crawler->selectButton('Ajouter')->form([
+        //     'restaurant[postalCode]' => '63000',
+        //     'restaurant[image]' => 'https://picsum.photos/300',
+        //     'restaurant[nomRestaurant]' => 'Resto',
+        // ]);
+
+        // $client->submit($form);
+        // $crawler = $client->followRedirect();
+        // $this->assertResponseIsSuccessful();
+        // $this->assertSelectorTextContains('div', 'Le restaurant a été mis à jour');
     }
 }
