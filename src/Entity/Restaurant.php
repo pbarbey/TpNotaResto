@@ -40,6 +40,11 @@ class Restaurant
      */
     private $nomRestaurant;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="restaurants")
+     */
+    private $user;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -77,6 +82,18 @@ class Restaurant
     public function setNomRestaurant(string $nomRestaurant): self
     {
         $this->nomRestaurant = $nomRestaurant;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }
